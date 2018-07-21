@@ -43,6 +43,7 @@ public class MainActivity extends AppCompatActivity implements android.app.Loade
     private LinearLayout loadingDisplayLayout;
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate ( savedInstanceState );
@@ -144,6 +145,7 @@ public class MainActivity extends AppCompatActivity implements android.app.Loade
 
     }
 
+
     @Override
     public void onLoadFinished(Loader<List<NewsFeedActivity>> loader, final List<NewsFeedActivity> newsList) {
         if (!onScreenOrientation) {
@@ -157,7 +159,7 @@ public class MainActivity extends AppCompatActivity implements android.app.Loade
                     adapter = new NewsFeedAdapter ( MainActivity.this, newsList );
                     item_listView.setAdapter ( (ListAdapter) adapter );
                 } else {
-                    data.addAll ( newsList );
+                    newsList.addAll ( newsList );
                     adapter.notify ();
                 }
                 data.addAll ( newsList );
