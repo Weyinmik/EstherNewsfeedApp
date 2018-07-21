@@ -6,8 +6,6 @@
     <string name="loading_fail_connection">No internet connection\nConnect to the internet then swipe down to refresh </string>
     <string name="loading_list_items">Loading more stories …</string>
     <string name="data_error">No stories found\nswipe down to refresh </string>
-
-
     <string name="toast_no_internet">No internet connection found </string>
     <string name="toast_refresh">onRefresh: called from SwipeRefreshLayout</string>
 
