@@ -78,5 +78,9 @@ public class MainActivity extends AppCompatActivity implements RecyclerAdapter.O
     }
 }
 
-//References: @Ahmed3010 has helped greatly with explanations and corrections in order for me to complete this project.
-// githublink: https://github.com/ahmed3010; slackname:@Ahmad
+/*References:
+    @Ahmed3010 has helped greatly with explanations and corrections in order for me to complete this project.
+    githublink: https://github.com/ahmed3010; slackname:@Ahmad
+    Image and Icon Resizer: http://nsimage.brosteins.com/Home/UploadIcon
+    Setting Icon: https://png.icons8.com/metro/1600/settings.png and converted to icon with Image and Icon Resizer
+ */
