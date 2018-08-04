@@ -1,7 +1,7 @@
 package com.example.koloh.esthernewsfeedapp;
 
-import android.content.AsyncTaskLoader;
 import android.content.Context;
+import android.support.v4.content.AsyncTaskLoader;
 import android.util.Log;
 
 import org.json.JSONArray;
@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,20 +27,11 @@ public class NewsFeedLoader extends AsyncTaskLoader<List<NewsFeedActivity>> {
 
     private static final String NEWS_TAG = "NewsFeedLoader";
     private List<NewsFeedActivity> newsfeed = new ArrayList<> ();
+    private URL url;
 
-    private String searchNews;
-    private int pageEnquiry;
-
-    /**
-     * Constructed a new {@link NewsFeedLoader}.
-     *
-     * @param context     of the activity
-     * @param pageEnquiry to load data from
-     */
-    public NewsFeedLoader(Context context, String searchNews, int pageEnquiry) {
+    NewsFeedLoader(Context context, URL url) {
         super ( context );
-        this.searchNews = searchNews;
-        this.pageEnquiry = pageEnquiry;
+        this.url = url;
     }
 
     /**
@@ -51,7 +43,7 @@ public class NewsFeedLoader extends AsyncTaskLoader<List<NewsFeedActivity>> {
         InputStream inputStream;
 
         try {
-            urlConnection = (HttpURLConnection) NewsQueryUtils.getUrl ( searchNews, pageEnquiry ).openConnection ();
+            urlConnection = (HttpURLConnection) url.openConnection ();
             urlConnection.setReadTimeout ( 10000 /* milliseconds */ );
             urlConnection.setConnectTimeout ( 15000 /* milliseconds */ );
             urlConnection.setRequestMethod ( "GET" );
@@ -75,13 +67,18 @@ public class NewsFeedLoader extends AsyncTaskLoader<List<NewsFeedActivity>> {
                     String date = currentNews.getString ( "webPublicationDate" );
                     String title = currentNews.getString ( "webTitle" );
                     String webUrl = currentNews.getString ( "webUrl" );
+                    String imageUrl = "";
+                    if (currentNews.has ( "fields" )) {
+                        JSONObject fields = currentNews.getJSONObject ( "fields" );
+                        imageUrl = fields.getString ( "thumbnail" );
+                    }
                     JSONArray tags = currentNews.getJSONArray ( "tags" );
                     String authorName = "";
                     if (tags.length () > 0) {
                         JSONObject author = tags.getJSONObject ( 0 );
                         authorName = author.getString ( "webTitle" );
                     }
-                    newsfeed.add ( new NewsFeedActivity ( title, section, date, webUrl, authorName ) );
+                    newsfeed.add ( new NewsFeedActivity ( title, section, date, webUrl, authorName, imageUrl ) );
                 }
             }
 
@@ -89,6 +86,7 @@ public class NewsFeedLoader extends AsyncTaskLoader<List<NewsFeedActivity>> {
             e.printStackTrace ();
         } catch (JSONException e) {
             e.printStackTrace ();
+            Log.e ( NEWS_TAG, "loadInBackground: " + e.getMessage () );
         }
         return newsfeed;
     }

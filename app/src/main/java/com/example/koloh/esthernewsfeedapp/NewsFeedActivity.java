@@ -8,14 +8,15 @@ import java.io.Serializable;
  */
 public class NewsFeedActivity implements Serializable {
     public static final long serialVersionUID = 21042018L;
-    private String title, section, date, author, webUrl;
+    private String title, section, date, author, webUrl, imageUrl;
 
-    public NewsFeedActivity(String title, String section, String date, String webUrl, String author) {
+    NewsFeedActivity(String title, String section, String date, String webUrl, String author, String imageUrl) {
         this.title = title;
         this.section = section;
         this.date = date;
         this.webUrl = webUrl;
         this.author = author;
+        this.imageUrl = imageUrl;
     }
 
     public String getTitle() {
@@ -34,11 +35,11 @@ public class NewsFeedActivity implements Serializable {
         return author;
     }
 
-    public void setAuthor(String author) {
-        this.author = author;
-    }
-
     public String getWebUrl() {
         return webUrl;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
     }
 }

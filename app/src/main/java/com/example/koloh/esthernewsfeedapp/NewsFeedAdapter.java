@@ -1,56 +1,58 @@
 package com.example.koloh.esthernewsfeedapp;
 
-import android.content.Context;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.TextView;
+import android.content.SharedPreferences;
+import android.content.res.Resources;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
 
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
 
-public class NewsFeedAdapter extends ArrayAdapter<NewsFeedActivity> {
+public class NewsFeedAdapter extends FragmentPagerAdapter {
 
-    NewsFeedAdapter(@NonNull Context context, @NonNull List<NewsFeedActivity> newsList) {
-        super ( context, 0, newsList );
-    }
+    private Set<String> sections;
+    private String newsPerPage;
+    private String sortOrder;
+    private Map<String, String> index = new HashMap<> ();
+    private Resources res;
 
-
-    @NonNull
-    @Override
-    public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-        ViewHolder item_holder;
-        if (convertView == null) {
-            convertView = LayoutInflater.from ( getContext () ).inflate ( R.layout.news_list_item, parent, false );
-            item_holder = new ViewHolder ( convertView );
-            convertView.setTag ( item_holder );
-        } else {
-            item_holder = (ViewHolder) convertView.getTag ();
-
+    NewsFeedAdapter(FragmentManager fm, Resources res, SharedPreferences preferences) {
+        super ( fm );
+        this.res = res;
+        sections = preferences.getStringSet ( res.getString ( R.string.news_sections_key ), null );
+        newsPerPage = preferences.getString ( res.getString ( R.string.newsfeed_per_page_key ), "10" );
+        sortOrder = preferences.getString ( res.getString ( R.string.news_sort_order_key ), "newest" );
+        String[] entries = res.getStringArray ( R.array.news_list_preference_entries );
+        String[] values = res.getStringArray ( R.array.news_list_preference_entries_values );
+        for (int i = 0; i < entries.length; i++) {
+            index.put ( values[i], entries[i] );
         }
-        item_holder.title.setText ( getItem ( position ).getTitle () );
-        item_holder.section.setText ( getItem ( position ).getSection () );
-        item_holder.date.setText ( getItem ( position ).getDate () );
-        item_holder.author.setText ( getItem ( position ).getAuthor () );
-        return convertView;
     }
 
 
-    class ViewHolder {
-        private TextView title;
-        private TextView section;
-        private TextView date;
-        private TextView author;
+    @Override
+    public Fragment getItem(int position) {
+        if (position == 0) {
+            return NewsFeedFragment.newInstance ( NewsQueryUtils.getUrl ( null, newsPerPage, sortOrder ) );
+        } else {
+            return NewsFeedFragment.newInstance ( NewsQueryUtils.getUrl ( (String) sections.toArray ()[position - 1], newsPerPage, sortOrder ) );
+        }
+    }
 
-        public ViewHolder(View view) {
-            this.title = view.findViewById ( R.id.title_textview );
-            this.section = view.findViewById ( R.id.section_textview );
-            this.date = view.findViewById ( R.id.date_textview );
-            this.author = view.findViewById ( R.id.author_textview );
+    @Override
+    public int getCount() {
+        return sections == null ? 1 : sections.size () + 1;
+    }
 
+    @SuppressWarnings("SuspiciousMethodCalls")
+    @Override
+    public CharSequence getPageTitle(int position) {
+        if (position == 0) {
+            return res.getString ( R.string.home );
+        } else {
+            return index.containsKey ( sections.toArray ()[position - 1] ) ? index.get ( sections.toArray ()[position - 1] ) : res.getString ( R.string.news_sections );
         }
     }
 }
-
