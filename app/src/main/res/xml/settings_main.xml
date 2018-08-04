@@ -1,14 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:title="@string/settings_title">
-
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <MultiSelectListPreference
+        android:defaultValue="@null"
+        android:key="@string/news_sections_key"
+        android:summary="@string/news_sections_summary"
+        android:title="@string/news_sections" />
     <EditTextPreference
-        android:defaultValue="@string/settings_min_magnitude_default"
+        android:defaultValue="@string/newsfeed_per_page_def"
+        android:hint="@string/edit_text_hint"
         android:inputType="numberDecimal"
-        android:key="@string/settings_min_magnitude_key"
+        android:key="@string/newsfeed_per_page_key"
+        android:max="2"
         android:selectAllOnFocus="true"
-        android:title="@string/settings_min_magnitude_label" />
-
+        android:summary="@string/newsfeed_per_page_summary"
+        android:title="@string/newsfeed_per_page_title" />
+    <ListPreference
+        android:defaultValue="@string/news_sort_order_def"
+        android:key="@string/news_sort_order_key"
+        android:summary="@string/news_sort_order_summary"
+        android:title="@string/news_sort_order_title" />
 </PreferenceScreen>
