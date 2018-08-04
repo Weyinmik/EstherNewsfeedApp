@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerAdapter.O
         tableLayout.setupWithViewPager ( viewPager );
         index = new HashMap<> ();
         for (int i = 0; i < tableLayout.getTabCount (); i++) {
-            TabLayout.Tab tab = tableLayout.getTabAt ( i ); 
+            TabLayout.Tab tab = tableLayout.getTabAt ( i );
             if (tab != null)
                 index.put ( String.valueOf ( tab.getText () ), i );
         }
