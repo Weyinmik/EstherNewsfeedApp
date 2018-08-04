@@ -29,12 +29,14 @@
 
     <style name="title_main">
         <item name="android:textSize">20sp</item>
+        <item name="font">@font/roboto</item>
         <item name="android:textColor">@android:color/white</item>
 
     </style>
 
     <style name="title">
         <item name="android:textSize">@dimen/text_primary</item>
+        <item name="font">@font/roboto</item>
         <item name="android:textColor">@color/text_primary</item>
 
     </style>
