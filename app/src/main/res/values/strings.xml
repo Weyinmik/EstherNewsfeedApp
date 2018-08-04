@@ -5,7 +5,7 @@
     <string name="loading_finished">onLoadFinished:  </string>
     <string name="loading_fail_connection">No internet connection\nPlease connect to the internet then swipe down to refresh </string>
     <string name="loading_list_items">Loading more news …</string>
-    <string name="data_error">No news found\nplease swipe down to refresh </string>
+    <string name="home_screen_text">Please tap the setting icon on the upper \n right to select your newsfeed section </string>
     <string name="toast_no_internet">No internet connection found </string>
     <string name="toast_refresh">onRefresh: called from SwipeRefreshLayout</string>
 

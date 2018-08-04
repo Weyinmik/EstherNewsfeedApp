@@ -4,6 +4,8 @@
         android:defaultValue="@null"
         android:key="@string/news_sections_key"
         android:summary="@string/news_sections_summary"
+        android:entries="@array/news_list_preference_entries"
+        android:entryValues="@array/news_list_preference_entries_values"
         android:title="@string/news_sections" />
     <EditTextPreference
         android:defaultValue="@string/newsfeed_per_page_def"
@@ -18,5 +20,7 @@
         android:defaultValue="@string/news_sort_order_def"
         android:key="@string/news_sort_order_key"
         android:summary="@string/news_sort_order_summary"
+        android:entries="@array/news_sort_order_entries"
+        android:entryValues="@array/news_sort_order_entries_value"
         android:title="@string/news_sort_order_title" />
 </PreferenceScreen>
