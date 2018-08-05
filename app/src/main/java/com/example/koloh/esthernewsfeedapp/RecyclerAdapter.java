@@ -163,7 +163,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     }
 
-
+    // Format date for easy understanding
     private String parseDate(String date) {
         if (date.equalsIgnoreCase ( "" )) {
             return "";
@@ -178,23 +178,14 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         }
         String result = "now";
 //        @SuppressLint("SimpleDateFormat") SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-//        String todayDate = formatter.format(new Date());
-//        Calendar calendar = Calendar.getInstance();
-//
+
         long dayAgoLong = Long.valueOf ( timeAtMilliseconds );
-//        calendar.setTimeInMillis(dayAgoLong);
-//        String agoFormatter = formatter.format(calendar.getTime());
-//
-//        Date CurrentDate ;
-//        Date CreateDate ;
+
         int timeZoneDifference = Calendar.getInstance ().getTimeZone ().getRawOffset ();
         try {
-//            CurrentDate = formatter.parse(todayDate);
-//            CreateDate = formatter.parse(agoFormatter);
+
             long different = new Date ().getTime () - (dayAgoLong + timeZoneDifference);
 
-
-//            long different = Math.abs(CurrentDate.getTime() - CreateDate.getTime());
 
             long secondsInMilli = 1000;
             long minutesInMilli = secondsInMilli * 60;

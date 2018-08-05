@@ -34,9 +34,9 @@ public class NewsFeedLoader extends AsyncTaskLoader<List<NewsFeedActivity>> {
         this.url = url;
     }
 
-    /**
-     * This is on a background thread.
-     */
+
+    // This is on a background thread.
+
     @Override
     public List<NewsFeedActivity> loadInBackground() {
         HttpURLConnection urlConnection;
