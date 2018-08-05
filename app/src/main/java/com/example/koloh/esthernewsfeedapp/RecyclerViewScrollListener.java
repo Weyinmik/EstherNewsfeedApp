@@ -23,15 +23,7 @@ public abstract class RecyclerViewScrollListener extends RecyclerView.OnScrollLi
         this.mLayoutManager = layoutManager;
     }
 
-    public RecyclerViewScrollListener(GridLayoutManager layoutManager) {
-        this.mLayoutManager = layoutManager;
-        visibleThreshold = visibleThreshold * layoutManager.getSpanCount ();
-    }
 
-    public RecyclerViewScrollListener(StaggeredGridLayoutManager layoutManager) {
-        this.mLayoutManager = layoutManager;
-        visibleThreshold = visibleThreshold * layoutManager.getSpanCount ();
-    }
 
     public int getLastVisibleItem(int[] lastVisibleItemPositions) {
         int maxSize = 0;
@@ -45,9 +37,7 @@ public abstract class RecyclerViewScrollListener extends RecyclerView.OnScrollLi
         return maxSize;
     }
 
-    // This happens many times a second during a scroll, so be wary of the code you place here.
-    // We are given a few useful parameters to help us work out if we need to load some more data,
-    // but first we check if we are waiting for the previous load to finish.
+    // check for previous load finish
     @Override
     public void onScrolled(RecyclerView view, int dx, int dy) {
         int lastVisibleItemPosition = 0;
@@ -72,18 +62,13 @@ public abstract class RecyclerViewScrollListener extends RecyclerView.OnScrollLi
                 this.loading = true;
             }
         }
-        // If it’s still loading, we check to see if the dataset count has
-        // changed, if so we conclude it has finished loading and update the current page
-        // number and total item count.
+        // check to see if data count has changed
         if (loading && (totalItemCount > previousTotalItemCount)) {
             loading = false;
             previousTotalItemCount = totalItemCount;
         }
 
-        // If it isn’t currently loading, we check to see if we have breached
-        // the visibleThreshold and need to reload more data.
-        // If we do need to reload some more data, we execute onLoadMore to fetch the data.
-        // threshold should reflect how many total columns there are too
+        // check if visible threshold is reached if page is not loading
         if (!loading && (lastVisibleItemPosition + visibleThreshold) > totalItemCount) {
             currentPage++;
             onLoadMore ( currentPage, totalItemCount, view );
@@ -98,7 +83,7 @@ public abstract class RecyclerViewScrollListener extends RecyclerView.OnScrollLi
         this.loading = true;
     }
 
-    // Defines the process for actually loading more data based on page
+    // loads more data based on page
     public abstract void onLoadMore(int page, int totalItemsCount, RecyclerView view);
 
 }
